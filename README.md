@@ -35,7 +35,7 @@ git clone https://github.com/shaposhnikoff/NBUStatService-prometheus-exporter.gi
 
 Run the container:
 
-docker run -it NBUStatService
+```docker run -it NBUStatService```
 
 Open Web browser:
 
