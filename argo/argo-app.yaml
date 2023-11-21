@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: data-test-project
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: infra
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 2 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 30s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
+  destination:
+    namespace: data-test-project-dev
+    server: 'https://kubernetes.default.svc'
+  sources:
+  - repoURL: 'https://github.com/shaposhnikoff/NBUStatService-prometheus-exporter.git'
+    targetRevision: 0.0.1-rc1
+    chart: NBUStatService
+    helm:
+      valueFiles:
+        - values.yaml
+  - repoURL: 'https://github.com/shaposhnikoff/NBUStatService-prometheus-exporter.git'
+    targetRevision: dev
+    ref: values
+
+
