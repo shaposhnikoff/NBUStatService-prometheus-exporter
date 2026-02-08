@@ -1,0 +1,39 @@
+[project]
+name = "nbu-stat-service-exporter"
+version = "1.0.0"
+description = "Prometheus exporter for NBU currency exchange rates"
+requires-python = ">=3.9"
+dependencies = [
+    "prometheus-client>=0.19.0",
+    "requests>=2.31.0",
+    "orjson>=3.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "pytest>=7.4.0",
+    "types-requests>=2.31.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
